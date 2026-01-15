@@ -105,7 +105,7 @@ export const usuarios: Usuario[] = [
     id: 'USR-001',
     nombre: 'María García',
     email: 'maria.garcia@gobierno.gob.ar',
-    roles: ['Resolutor', 'Supervisor'],
+    roles: ['Resolutor', 'Coordinador'],
     mesasTrabajo: ['Mesa de Atención Ciudadana'],
     estado: 'activo',
   },
