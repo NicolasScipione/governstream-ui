@@ -15,7 +15,7 @@ import {
 import { Globe, Phone, Building, Mail, MessageSquare } from 'lucide-react';
 
 const origenData = [
-  { origen: 'Portal Web', cantidad: 523, porcentaje: 42, icon: Globe, color: '#3B82F6' },
+  { origen: 'Municipios San Francisco', cantidad: 523, porcentaje: 42, icon: Globe, color: '#3B82F6' },
   { origen: 'Ventanilla Presencial', cantidad: 312, porcentaje: 25, icon: Building, color: '#06B6D4' },
   { origen: 'Call Center', cantidad: 234, porcentaje: 19, icon: Phone, color: '#22C55E' },
   { origen: 'Email', cantidad: 112, porcentaje: 9, icon: Mail, color: '#EAB308' },
