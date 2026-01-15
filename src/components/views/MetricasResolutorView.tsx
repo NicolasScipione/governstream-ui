@@ -63,7 +63,7 @@ const resolutorData = [
 export function MetricasResolutorView() {
   return (
     <div className="flex flex-col h-full animate-fade-in">
-      <CommandBar showNew={false} />
+      <CommandBar showNew={false} showExport={false} />
 
       <div className="flex-1 overflow-auto p-6 space-y-6">
         {/* Resolutor Cards */}
