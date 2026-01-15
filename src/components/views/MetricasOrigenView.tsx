@@ -26,7 +26,7 @@ const origenData = [{
   icon: Mail,
   color: '#EAB308'
 }, {
-  origen: 'Municipalidad',
+  origen: 'Foro Productivo de la Zona Norte',
   cantidad: 66,
   porcentaje: 5,
   icon: MessageSquare,
