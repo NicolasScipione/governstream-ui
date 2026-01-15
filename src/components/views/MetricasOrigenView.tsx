@@ -8,7 +8,7 @@ const origenData = [{
   icon: Globe,
   color: '#3B82F6'
 }, {
-  origen: 'Ventanilla Presencial',
+  origen: 'Municipio Hernando',
   cantidad: 312,
   porcentaje: 25,
   icon: Building,
