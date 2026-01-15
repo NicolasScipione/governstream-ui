@@ -2,7 +2,7 @@ import { CommandBar } from '@/components/common/CommandBar';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import { Globe, Phone, Building, Mail, MessageSquare } from 'lucide-react';
 const origenData = [{
-  origen: 'Portal Web',
+  origen: 'Centro Comercial General Cabrera',
   cantidad: 523,
   porcentaje: 42,
   icon: Globe,
