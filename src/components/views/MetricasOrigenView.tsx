@@ -20,7 +20,7 @@ const origenData = [{
   icon: Phone,
   color: '#22C55E'
 }, {
-  origen: 'Email',
+  origen: 'Cámara Cordobesa del Neumático',
   cantidad: 112,
   porcentaje: 9,
   icon: Mail,
