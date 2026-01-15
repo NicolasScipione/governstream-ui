@@ -36,7 +36,7 @@ const sidebarConfig: Record<string, { title: string; items: { id: string; label:
       { id: 'metricas-tipo', label: 'Por Tipo de Solicitud', icon: Target },
       { id: 'metricas-prioridad', label: 'Por Prioridad e Impacto', icon: AlertCircle },
       { id: 'metricas-resolutor', label: 'Por Resolutor', icon: UserCheck },
-      { id: 'metricas-origen', label: 'Por Origen Institucional', icon: MapPin },
+      { id: 'metricas-origen', label: 'Por Camaras/Municipios', icon: MapPin },
     ],
   },
   administracion: {
