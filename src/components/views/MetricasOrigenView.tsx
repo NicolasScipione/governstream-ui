@@ -19,7 +19,7 @@ const origenData = [
   { origen: 'Municipio Villa Allende', cantidad: 312, porcentaje: 25, icon: Building, color: '#06B6D4' },
   { origen: 'Foro Productivo de la Zona Norte', cantidad: 234, porcentaje: 19, icon: Phone, color: '#22C55E' },
   { origen: 'Cámara de Gimnasios de Córdoba', cantidad: 112, porcentaje: 9, icon: Mail, color: '#EAB308' },
-  { origen: 'Municipalidad', cantidad: 66, porcentaje: 5, icon: MessageSquare, color: '#9CA3AF' },
+  { origen: 'Centro Comercial General Cabrera', cantidad: 66, porcentaje: 5, icon: MessageSquare, color: '#9CA3AF' },
 ];
 
 const origenTendencia = [
