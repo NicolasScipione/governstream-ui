@@ -2,7 +2,7 @@ import { CommandBar } from '@/components/common/CommandBar';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import { Globe, Phone, Building, Mail, MessageSquare } from 'lucide-react';
 const origenData = [{
-  origen: 'Centro Comercial General Cabrera',
+  origen: 'Centro comercial general cabrera',
   cantidad: 523,
   porcentaje: 42,
   icon: Globe,
@@ -14,7 +14,7 @@ const origenData = [{
   icon: Building,
   color: '#06B6D4'
 }, {
-  origen: 'Municipio La Falda',
+  origen: 'Municipio La falda',
   cantidad: 234,
   porcentaje: 19,
   icon: Phone,
@@ -34,46 +34,46 @@ const origenData = [{
 }];
 const origenTendencia = [{
   mes: 'Ago',
-  web: 78,
-  presencial: 45,
-  callcenter: 32,
-  email: 15,
-  municipalidad: 8
+  centro: 78,
+  hernando: 45,
+  falda: 32,
+  camara: 15,
+  foro: 8
 }, {
   mes: 'Sep',
-  web: 89,
-  presencial: 52,
-  callcenter: 38,
-  email: 18,
-  municipalidad: 10
+  centro: 89,
+  hernando: 52,
+  falda: 38,
+  camara: 18,
+  foro: 10
 }, {
   mes: 'Oct',
-  web: 95,
-  presencial: 48,
-  callcenter: 41,
-  email: 22,
-  municipalidad: 12
+  centro: 95,
+  hernando: 48,
+  falda: 41,
+  camara: 22,
+  foro: 12
 }, {
   mes: 'Nov',
-  web: 102,
-  presencial: 55,
-  callcenter: 45,
-  email: 19,
-  municipalidad: 11
+  centro: 102,
+  hernando: 55,
+  falda: 45,
+  camara: 19,
+  foro: 11
 }, {
   mes: 'Dic',
-  web: 88,
-  presencial: 58,
-  callcenter: 42,
-  email: 20,
-  municipalidad: 13
+  centro: 88,
+  hernando: 58,
+  falda: 42,
+  camara: 20,
+  foro: 13
 }, {
   mes: 'Ene',
-  web: 71,
-  presencial: 54,
-  callcenter: 36,
-  email: 18,
-  municipalidad: 12
+  centro: 71,
+  hernando: 54,
+  falda: 36,
+  camara: 18,
+  foro: 12
 }];
 export function MetricasOrigenView() {
   return <div className="flex flex-col h-full animate-fade-in">
@@ -145,9 +145,11 @@ export function MetricasOrigenView() {
                   <Legend wrapperStyle={{
                   fontSize: '11px'
                 }} />
-                  <Bar dataKey="web" fill="#3B82F6" name="Portal Web" />
-                  <Bar dataKey="presencial" fill="#06B6D4" name="Presencial" />
-                  <Bar dataKey="callcenter" fill="#22C55E" name="Call Center" />
+                  <Bar dataKey="centro" fill="#3B82F6" name="Centro comercial general cabrera" />
+                  <Bar dataKey="hernando" fill="#06B6D4" name="Municipio Hernando" />
+                  <Bar dataKey="falda" fill="#22C55E" name="Municipio La falda" />
+                  <Bar dataKey="camara" fill="#EAB308" name="Cámara Cordobesa del Neumático" />
+                  <Bar dataKey="foro" fill="#9CA3AF" name="Foro Productivo de la Zona Norte" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
