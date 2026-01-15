@@ -14,7 +14,7 @@ const origenData = [{
   icon: Building,
   color: '#06B6D4'
 }, {
-  origen: 'Call Center',
+  origen: 'Municipio La Falda',
   cantidad: 234,
   porcentaje: 19,
   icon: Phone,

@@ -35,7 +35,7 @@ export const solicitudes: Solicitud[] = [
     impacto: 'local',
     categoria: 'Consultas Generales',
     subcategoria: 'Información',
-    origenInstitucional: 'Call Center',
+    origenInstitucional: 'Municipio La Falda',
     fechaCreacion: '2024-01-13',
   },
   {
