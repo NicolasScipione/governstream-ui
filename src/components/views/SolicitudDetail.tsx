@@ -346,9 +346,9 @@ export function SolicitudDetail({ solicitudId, onBack }: SolicitudDetailProps) {
             </div>
             
             <div className="space-y-2">
-              <Label>Observación Interna <span className="text-muted-foreground text-xs">(opcional)</span></Label>
+              <Label>Respuesta del Resolutor <span className="text-muted-foreground text-xs">(opcional)</span></Label>
               <Textarea 
-                placeholder="Ingrese una observación sobre el cambio de estado..."
+                placeholder="Ingrese la respuesta del resolutor..."
                 value={statusObservation}
                 onChange={(e) => setStatusObservation(e.target.value)}
                 rows={3}
