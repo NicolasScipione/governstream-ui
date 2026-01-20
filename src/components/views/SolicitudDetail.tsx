@@ -205,14 +205,26 @@ export function SolicitudDetail({ solicitudId, onBack }: SolicitudDetailProps) {
             </div>
             <div></div>
           </div>
-          <div className="mt-4 space-y-2">
-            <Label className="text-muted-foreground text-xs uppercase tracking-wide">Observación Interna</Label>
-            <Textarea 
-              placeholder="Ingrese observaciones internas sobre esta solicitud..."
-              defaultValue={solicitud.observaciones}
-              rows={3}
-              className="resize-none"
-            />
+          <div className="mt-4 grid grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <Label className="text-muted-foreground text-xs uppercase tracking-wide">Observación Interna</Label>
+              <Textarea 
+                placeholder="Ingrese observaciones internas sobre esta solicitud..."
+                defaultValue={solicitud.observaciones}
+                rows={3}
+                className="resize-none"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-muted-foreground text-xs uppercase tracking-wide">Respuesta de Resolutor</Label>
+              <Textarea 
+                placeholder="Respuesta proporcionada al cerrar el ticket..."
+                defaultValue=""
+                rows={3}
+                className="resize-none"
+                disabled
+              />
+            </div>
           </div>
         </div>
 
