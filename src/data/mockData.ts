@@ -150,7 +150,7 @@ export const mesasTrabajo: MesaTrabajo[] = [
     descripcion: 'Gestión de consultas y trámites ciudadanos generales',
     estado: 'activa',
     usuarios: ['María García', 'Ana Rodríguez'],
-    formularios: ['Consulta General', 'Reclamo', 'Solicitud de Información'],
+    categorias: ['Trámites Personales', 'Consultas Generales', 'Reclamos'],
   },
   {
     id: 'MT-002',
@@ -158,7 +158,7 @@ export const mesasTrabajo: MesaTrabajo[] = [
     descripcion: 'Atención de programas sociales y asistencia',
     estado: 'activa',
     usuarios: ['Carlos López'],
-    formularios: ['Solicitud de Subsidio', 'Programa Alimentario', 'Asistencia Habitacional'],
+    categorias: ['Asistencia Social'],
   },
   {
     id: 'MT-003',
@@ -166,7 +166,7 @@ export const mesasTrabajo: MesaTrabajo[] = [
     descripcion: 'Gestión de permisos, habilitaciones y obras',
     estado: 'activa',
     usuarios: ['Pedro Martínez', 'Laura Fernández'],
-    formularios: ['Permiso de Obra', 'Habilitación Comercial', 'Inspección'],
+    categorias: ['Infraestructura', 'Permisos'],
   },
 ];
 
