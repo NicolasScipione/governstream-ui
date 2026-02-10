@@ -55,7 +55,7 @@ export function MesasTrabajoView() {
     setter(list.includes(value) ? list.filter(v => v !== value) : [...list, value]);
   };
 
-  // Detail view
+  // Detail view — ficha/formulario style
   if (selectedMesa) {
     return (
       <div className="flex flex-col h-full animate-fade-in">
@@ -65,41 +65,65 @@ export function MesasTrabajoView() {
           </Button>
         </CommandBar>
         <div className="flex-1 overflow-auto p-6">
-          <div className="dashboard-card">
-            <div className="flex items-center gap-3 mb-4">
-              <h2 className="text-xl font-semibold">{selectedMesa.nombre}</h2>
-              <span className={cn(
-                "badge-status",
-                selectedMesa.estado === 'activa' ? 'badge-success' : 'badge-initiated'
-              )}>
-                {selectedMesa.estado === 'activa' ? 'Activa' : 'Inactiva'}
-              </span>
+          <div className="max-w-2xl">
+            {/* Header */}
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold mb-1">{selectedMesa.nombre}</h2>
+              <p className="text-sm text-muted-foreground">{selectedMesa.id}</p>
             </div>
-            {selectedMesa.descripcion && (
-              <p className="text-sm text-muted-foreground mb-6">{selectedMesa.descripcion}</p>
-            )}
 
-            <div className="grid grid-cols-2 gap-6 pt-4 border-t border-border">
-              <div>
-                <div className="flex items-center gap-2 mb-2 text-sm font-medium text-muted-foreground">
-                  <Users className="w-4 h-4" />
-                  <span>Usuarios Resolutores ({selectedMesa.usuarios.length})</span>
+            {/* Fields */}
+            <div className="dashboard-card divide-y divide-border">
+              {/* Estado */}
+              <div className="flex items-center justify-between py-4 px-2">
+                <Label className="text-muted-foreground font-medium">Estado</Label>
+                <span className={cn(
+                  "badge-status",
+                  selectedMesa.estado === 'activa' ? 'badge-success' : 'badge-initiated'
+                )}>
+                  {selectedMesa.estado === 'activa' ? 'Activa' : 'Inactiva'}
+                </span>
+              </div>
+
+              {/* Descripción */}
+              {selectedMesa.descripcion && (
+                <div className="py-4 px-2">
+                  <Label className="text-muted-foreground font-medium block mb-1">Descripción</Label>
+                  <p className="text-sm">{selectedMesa.descripcion}</p>
                 </div>
-                <div className="flex flex-wrap gap-1">
-                  {selectedMesa.usuarios.map(u => (
-                    <Badge key={u} variant="secondary" className="text-xs">{u}</Badge>
-                  ))}
+              )}
+
+              {/* Usuarios Resolutores */}
+              <div className="py-4 px-2">
+                <Label className="text-muted-foreground font-medium flex items-center gap-2 mb-2">
+                  <Users className="w-4 h-4" />
+                  Usuarios Resolutores ({selectedMesa.usuarios.length})
+                </Label>
+                <div className="flex flex-wrap gap-1.5">
+                  {selectedMesa.usuarios.length > 0 ? (
+                    selectedMesa.usuarios.map(u => (
+                      <Badge key={u} variant="secondary" className="text-xs">{u}</Badge>
+                    ))
+                  ) : (
+                    <span className="text-sm text-muted-foreground italic">Sin usuarios asignados</span>
+                  )}
                 </div>
               </div>
-              <div>
-                <div className="flex items-center gap-2 mb-2 text-sm font-medium text-muted-foreground">
+
+              {/* Categorías Asociadas */}
+              <div className="py-4 px-2">
+                <Label className="text-muted-foreground font-medium flex items-center gap-2 mb-2">
                   <FolderOpen className="w-4 h-4" />
-                  <span>Categorías Asociadas ({selectedMesa.categorias.length})</span>
-                </div>
-                <div className="flex flex-wrap gap-1">
-                  {selectedMesa.categorias.map(c => (
-                    <Badge key={c} variant="outline" className="text-xs">{c}</Badge>
-                  ))}
+                  Categorías Asociadas ({selectedMesa.categorias.length})
+                </Label>
+                <div className="flex flex-wrap gap-1.5">
+                  {selectedMesa.categorias.length > 0 ? (
+                    selectedMesa.categorias.map(c => (
+                      <Badge key={c} variant="outline" className="text-xs">{c}</Badge>
+                    ))
+                  ) : (
+                    <span className="text-sm text-muted-foreground italic">Sin categorías asociadas</span>
+                  )}
                 </div>
               </div>
             </div>
