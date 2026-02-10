@@ -13,7 +13,7 @@ import { MetricasResolutorView } from '@/components/views/MetricasResolutorView'
 import { MetricasOrigenView } from '@/components/views/MetricasOrigenView';
 import { UsuariosView } from '@/components/views/UsuariosView';
 import { MesasTrabajoView } from '@/components/views/MesasTrabajoView';
-import { AsociacionFormulariosView } from '@/components/views/AsociacionFormulariosView';
+
 
 const Index = () => {
   const [activeArea, setActiveArea] = useState('operacion');
@@ -72,8 +72,6 @@ const Index = () => {
         return <UsuariosView />;
       case 'mesas-trabajo':
         return <MesasTrabajoView />;
-      case 'asociacion-formularios':
-        return <AsociacionFormulariosView />;
       
       default:
         return <SolicitudesGrid onSelectSolicitud={setSelectedSolicitud} />;

@@ -38,7 +38,7 @@ export interface MesaTrabajo {
   descripcion: string;
   estado: 'activa' | 'inactiva';
   usuarios: string[];
-  formularios: string[];
+  categorias: string[];
 }
 
 export interface Documento {
