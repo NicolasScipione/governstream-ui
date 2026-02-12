@@ -7,8 +7,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Switch } from '@/components/ui/switch';
 import { cn } from '@/lib/utils';
-import { Users, FolderOpen, Plus, ArrowLeft } from 'lucide-react';
+import { Users, FolderOpen, Plus, ArrowLeft, Pencil, Power } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -17,6 +18,16 @@ import {
   DialogFooter,
   DialogDescription,
 } from '@/components/ui/dialog';
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from '@/components/ui/alert-dialog';
 
 // Derive categories from solicitudes
 const categoriasDisponibles = Array.from(new Set(solicitudes.map(s => s.categoria)));
@@ -28,6 +39,16 @@ export function MesasTrabajoView() {
   const [mesas, setMesas] = useState<MesaTrabajo[]>(mesasTrabajo);
   const [selectedMesa, setSelectedMesa] = useState<MesaTrabajo | null>(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
+
+  // Edit mode state
+  const [isEditing, setIsEditing] = useState(false);
+  const [editNombre, setEditNombre] = useState('');
+  const [editDescripcion, setEditDescripcion] = useState('');
+  const [editCategorias, setEditCategorias] = useState<string[]>([]);
+  const [editUsuarios, setEditUsuarios] = useState<string[]>([]);
+
+  // Toggle status confirmation
+  const [showToggleConfirm, setShowToggleConfirm] = useState(false);
 
   // Create modal state
   const [newNombre, setNewNombre] = useState('');
@@ -51,6 +72,42 @@ export function MesasTrabajoView() {
     setShowCreateModal(false);
   };
 
+  const startEditing = () => {
+    if (!selectedMesa) return;
+    setEditNombre(selectedMesa.nombre);
+    setEditDescripcion(selectedMesa.descripcion);
+    setEditCategorias([...selectedMesa.categorias]);
+    setEditUsuarios([...selectedMesa.usuarios]);
+    setIsEditing(true);
+  };
+
+  const cancelEditing = () => {
+    setIsEditing(false);
+  };
+
+  const saveEditing = () => {
+    if (!selectedMesa || !editNombre.trim()) return;
+    const updated: MesaTrabajo = {
+      ...selectedMesa,
+      nombre: editNombre.trim(),
+      descripcion: editDescripcion.trim(),
+      categorias: editCategorias,
+      usuarios: editUsuarios,
+    };
+    setMesas(prev => prev.map(m => m.id === updated.id ? updated : m));
+    setSelectedMesa(updated);
+    setIsEditing(false);
+  };
+
+  const handleToggleEstado = () => {
+    if (!selectedMesa) return;
+    const newEstado = selectedMesa.estado === 'activa' ? 'inactiva' : 'activa';
+    const updated: MesaTrabajo = { ...selectedMesa, estado: newEstado };
+    setMesas(prev => prev.map(m => m.id === updated.id ? updated : m));
+    setSelectedMesa(updated);
+    setShowToggleConfirm(false);
+  };
+
   const toggleSelection = (value: string, list: string[], setter: (v: string[]) => void) => {
     setter(list.includes(value) ? list.filter(v => v !== value) : [...list, value]);
   };
@@ -60,16 +117,48 @@ export function MesasTrabajoView() {
     return (
       <div className="flex flex-col h-full animate-fade-in">
         <CommandBar showNew={false} showExport={false}>
-          <Button variant="ghost" size="sm" onClick={() => setSelectedMesa(null)} className="mr-auto">
+          <Button variant="ghost" size="sm" onClick={() => { setSelectedMesa(null); setIsEditing(false); }} className="mr-auto">
             <ArrowLeft className="w-4 h-4 mr-1" /> Volver
           </Button>
         </CommandBar>
         <div className="flex-1 overflow-auto p-6">
           <div className="max-w-2xl">
             {/* Header */}
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold mb-1">{selectedMesa.nombre}</h2>
-              <p className="text-sm text-muted-foreground">{selectedMesa.id}</p>
+            <div className="flex items-start justify-between mb-6">
+              <div>
+                {isEditing ? (
+                  <Input
+                    value={editNombre}
+                    onChange={e => setEditNombre(e.target.value)}
+                    className="text-2xl font-bold h-auto py-1 mb-1"
+                  />
+                ) : (
+                  <h2 className="text-2xl font-bold mb-1">{selectedMesa.nombre}</h2>
+                )}
+                <p className="text-sm text-muted-foreground">{selectedMesa.id}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                {isEditing ? (
+                  <>
+                    <Button variant="outline" size="sm" onClick={cancelEditing}>Cancelar</Button>
+                    <Button size="sm" onClick={saveEditing} disabled={!editNombre.trim()}>Guardar</Button>
+                  </>
+                ) : (
+                  <>
+                    <Button variant="outline" size="sm" onClick={startEditing}>
+                      <Pencil className="w-4 h-4 mr-1" /> Editar
+                    </Button>
+                    <Button
+                      variant={selectedMesa.estado === 'activa' ? 'destructive' : 'default'}
+                      size="sm"
+                      onClick={() => setShowToggleConfirm(true)}
+                    >
+                      <Power className="w-4 h-4 mr-1" />
+                      {selectedMesa.estado === 'activa' ? 'Inactivar' : 'Activar'}
+                    </Button>
+                  </>
+                )}
+              </div>
             </div>
 
             {/* Fields */}
@@ -86,49 +175,104 @@ export function MesasTrabajoView() {
               </div>
 
               {/* Descripción */}
-              {selectedMesa.descripcion && (
-                <div className="py-4 px-2">
-                  <Label className="text-muted-foreground font-medium block mb-1">Descripción</Label>
-                  <p className="text-sm">{selectedMesa.descripcion}</p>
-                </div>
-              )}
+              <div className="py-4 px-2">
+                <Label className="text-muted-foreground font-medium block mb-1">Descripción</Label>
+                {isEditing ? (
+                  <Input
+                    value={editDescripcion}
+                    onChange={e => setEditDescripcion(e.target.value)}
+                    placeholder="Descripción de la mesa..."
+                  />
+                ) : (
+                  <p className="text-sm">{selectedMesa.descripcion || <span className="italic text-muted-foreground">Sin descripción</span>}</p>
+                )}
+              </div>
 
               {/* Usuarios Resolutores */}
               <div className="py-4 px-2">
                 <Label className="text-muted-foreground font-medium flex items-center gap-2 mb-2">
                   <Users className="w-4 h-4" />
-                  Usuarios Resolutores ({selectedMesa.usuarios.length})
+                  Usuarios Resolutores ({isEditing ? editUsuarios.length : selectedMesa.usuarios.length})
                 </Label>
-                <div className="flex flex-wrap gap-1.5">
-                  {selectedMesa.usuarios.length > 0 ? (
-                    selectedMesa.usuarios.map(u => (
-                      <Badge key={u} variant="secondary" className="text-xs">{u}</Badge>
-                    ))
-                  ) : (
-                    <span className="text-sm text-muted-foreground italic">Sin usuarios asignados</span>
-                  )}
-                </div>
+                {isEditing ? (
+                  <div className="flex flex-wrap gap-2 p-3 border rounded-md max-h-40 overflow-auto">
+                    {resolutores.map(u => (
+                      <label key={u.id} className="flex items-center gap-2 text-sm cursor-pointer">
+                        <Checkbox
+                          checked={editUsuarios.includes(u.nombre)}
+                          onCheckedChange={() => toggleSelection(u.nombre, editUsuarios, setEditUsuarios)}
+                        />
+                        {u.nombre}
+                      </label>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex flex-wrap gap-1.5">
+                    {selectedMesa.usuarios.length > 0 ? (
+                      selectedMesa.usuarios.map(u => (
+                        <Badge key={u} variant="secondary" className="text-xs">{u}</Badge>
+                      ))
+                    ) : (
+                      <span className="text-sm text-muted-foreground italic">Sin usuarios asignados</span>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* Categorías Asociadas */}
               <div className="py-4 px-2">
                 <Label className="text-muted-foreground font-medium flex items-center gap-2 mb-2">
                   <FolderOpen className="w-4 h-4" />
-                  Categorías Asociadas ({selectedMesa.categorias.length})
+                  Categorías Asociadas ({isEditing ? editCategorias.length : selectedMesa.categorias.length})
                 </Label>
-                <div className="flex flex-wrap gap-1.5">
-                  {selectedMesa.categorias.length > 0 ? (
-                    selectedMesa.categorias.map(c => (
-                      <Badge key={c} variant="outline" className="text-xs">{c}</Badge>
-                    ))
-                  ) : (
-                    <span className="text-sm text-muted-foreground italic">Sin categorías asociadas</span>
-                  )}
-                </div>
+                {isEditing ? (
+                  <div className="flex flex-wrap gap-2 p-3 border rounded-md max-h-40 overflow-auto">
+                    {categoriasDisponibles.map(cat => (
+                      <label key={cat} className="flex items-center gap-2 text-sm cursor-pointer">
+                        <Checkbox
+                          checked={editCategorias.includes(cat)}
+                          onCheckedChange={() => toggleSelection(cat, editCategorias, setEditCategorias)}
+                        />
+                        {cat}
+                      </label>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex flex-wrap gap-1.5">
+                    {selectedMesa.categorias.length > 0 ? (
+                      selectedMesa.categorias.map(c => (
+                        <Badge key={c} variant="outline" className="text-xs">{c}</Badge>
+                      ))
+                    ) : (
+                      <span className="text-sm text-muted-foreground italic">Sin categorías asociadas</span>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
+
+        {/* Confirm toggle estado */}
+        <AlertDialog open={showToggleConfirm} onOpenChange={setShowToggleConfirm}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                {selectedMesa.estado === 'activa' ? 'Inactivar' : 'Activar'} Mesa de Trabajo
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                ¿Está seguro que desea {selectedMesa.estado === 'activa' ? 'inactivar' : 'activar'} la mesa <strong>{selectedMesa.nombre}</strong>?
+                {selectedMesa.estado === 'activa' && ' Las solicitudes asociadas no podrán ser asignadas a esta mesa mientras esté inactiva.'}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancelar</AlertDialogCancel>
+              <AlertDialogAction onClick={handleToggleEstado}>
+                Confirmar
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     );
   }
