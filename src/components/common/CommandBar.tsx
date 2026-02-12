@@ -11,35 +11,35 @@ interface CommandBarProps {
   children?: React.ReactNode;
 }
 
-export function CommandBar({ 
-  onNew, 
-  onRefresh, 
-  onExport, 
-  showNew = true, 
+export function CommandBar({
+  onNew,
+  onRefresh,
+  onExport,
+  showNew = true,
   showExport = true,
   title,
-  children 
+  children
 }: CommandBarProps) {
   return (
     <div className="command-bar">
-      {showNew && (
-        <button onClick={onNew} className="command-btn command-btn-primary">
+      {showNew &&
+      <button onClick={onNew} className="command-btn command-btn-primary">
           <Plus className="w-4 h-4" />
           <span>Nuevo</span>
         </button>
-      )}
+      }
       
       <button onClick={onRefresh} className="command-btn">
         <RefreshCw className="w-4 h-4" />
         <span>Actualizar</span>
       </button>
       
-      {showExport && (
-        <button onClick={onExport} className="command-btn">
-          <Download className="w-4 h-4" />
-          <span>Exportar</span>
-        </button>
-      )}
+      {showExport
+
+
+
+
+      }
 
       <div className="flex-1" />
 
@@ -53,6 +53,6 @@ export function CommandBar({
       <button className="command-btn">
         <MoreHorizontal className="w-4 h-4" />
       </button>
-    </div>
-  );
+    </div>);
+
 }
