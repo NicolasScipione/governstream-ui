@@ -45,10 +45,10 @@ export function CommandBar({
 
       {children}
 
-      <button className="command-btn">
-        <Filter className="w-4 h-4" />
-        <span>Filtros</span>
-      </button>
+      
+
+
+
 
       <button className="command-btn">
         <MoreHorizontal className="w-4 h-4" />
