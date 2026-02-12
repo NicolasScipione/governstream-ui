@@ -29,10 +29,10 @@ export function CommandBar({
         </button>
       }
       
-      <button onClick={onRefresh} className="command-btn">
-        <RefreshCw className="w-4 h-4" />
-        <span>Actualizar</span>
-      </button>
+      
+
+
+
       
       {showExport
 
