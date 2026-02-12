@@ -7,9 +7,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Switch } from '@/components/ui/switch';
 import { cn } from '@/lib/utils';
-import { Users, FolderOpen, Plus, ArrowLeft, Pencil, Power } from 'lucide-react';
+import { Users, FolderOpen, Plus, ArrowLeft, Pencil, Power, ChevronsUpDown } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
   Dialog,
   DialogContent,
@@ -195,16 +195,35 @@ export function MesasTrabajoView() {
                   Usuarios Resolutores ({isEditing ? editUsuarios.length : selectedMesa.usuarios.length})
                 </Label>
                 {isEditing ? (
-                  <div className="flex flex-wrap gap-2 p-3 border rounded-md max-h-40 overflow-auto">
-                    {resolutores.map(u => (
-                      <label key={u.id} className="flex items-center gap-2 text-sm cursor-pointer">
-                        <Checkbox
-                          checked={editUsuarios.includes(u.nombre)}
-                          onCheckedChange={() => toggleSelection(u.nombre, editUsuarios, setEditUsuarios)}
-                        />
-                        {u.nombre}
-                      </label>
-                    ))}
+                  <div>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant="outline" className="w-full justify-between font-normal">
+                          {editUsuarios.length > 0 ? `${editUsuarios.length} seleccionado(s)` : 'Seleccionar usuarios...'}
+                          <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[--radix-popover-trigger-width] p-0 bg-background border z-50" align="start">
+                        <div className="flex flex-col gap-1 p-2 max-h-48 overflow-auto">
+                          {resolutores.map(u => (
+                            <label key={u.id} className="flex items-center gap-2 text-sm cursor-pointer rounded-sm px-2 py-1.5 hover:bg-accent">
+                              <Checkbox
+                                checked={editUsuarios.includes(u.nombre)}
+                                onCheckedChange={() => toggleSelection(u.nombre, editUsuarios, setEditUsuarios)}
+                              />
+                              {u.nombre}
+                            </label>
+                          ))}
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                    {editUsuarios.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-2">
+                        {editUsuarios.map(u => (
+                          <Badge key={u} variant="secondary" className="text-xs">{u}</Badge>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="flex flex-wrap gap-1.5">
@@ -226,16 +245,35 @@ export function MesasTrabajoView() {
                   Categorías Asociadas ({isEditing ? editCategorias.length : selectedMesa.categorias.length})
                 </Label>
                 {isEditing ? (
-                  <div className="flex flex-wrap gap-2 p-3 border rounded-md max-h-40 overflow-auto">
-                    {categoriasDisponibles.map(cat => (
-                      <label key={cat} className="flex items-center gap-2 text-sm cursor-pointer">
-                        <Checkbox
-                          checked={editCategorias.includes(cat)}
-                          onCheckedChange={() => toggleSelection(cat, editCategorias, setEditCategorias)}
-                        />
-                        {cat}
-                      </label>
-                    ))}
+                  <div>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant="outline" className="w-full justify-between font-normal">
+                          {editCategorias.length > 0 ? `${editCategorias.length} seleccionada(s)` : 'Seleccionar categorías...'}
+                          <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[--radix-popover-trigger-width] p-0 bg-background border z-50" align="start">
+                        <div className="flex flex-col gap-1 p-2 max-h-48 overflow-auto">
+                          {categoriasDisponibles.map(cat => (
+                            <label key={cat} className="flex items-center gap-2 text-sm cursor-pointer rounded-sm px-2 py-1.5 hover:bg-accent">
+                              <Checkbox
+                                checked={editCategorias.includes(cat)}
+                                onCheckedChange={() => toggleSelection(cat, editCategorias, setEditCategorias)}
+                              />
+                              {cat}
+                            </label>
+                          ))}
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                    {editCategorias.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-2">
+                        {editCategorias.map(c => (
+                          <Badge key={c} variant="outline" className="text-xs">{c}</Badge>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="flex flex-wrap gap-1.5">
